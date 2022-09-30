@@ -1,22 +1,26 @@
 package com.app.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.app.bean.Admin;
 import com.app.bean.AuctionHistory;
 import com.app.bean.Buyer;
-import com.app.bean.Buyer.Type;
+import com.app.bean.Type;
 import com.app.bean.Seller;
 import com.app.exception.AdminException;
 import com.app.exception.AuctionHistoryException;
 import com.app.exception.BuyerException;
 import com.app.exception.SellerException;
+import com.app.exception.UserException;
 import com.app.utility.DBUtil;
+import com.mysql.cj.protocol.Resultset;
 
 public class AdminDaoImpl implements AdminDao{
 
@@ -72,6 +76,8 @@ public class AdminDaoImpl implements AdminDao{
 				int id = rs.getInt("userid");
 				String username = rs.getString("username");
 				String password = rs.getString("password");
+//				Type type = Type.valueOf(rs.getString("type"));
+				
 				Type type = Type.valueOf(rs.getString("type"));
 				
 				Buyer buyer = new Buyer(id,username,password,type);
@@ -95,14 +101,79 @@ public class AdminDaoImpl implements AdminDao{
 
 	@Override
 	public List<Seller> getAllSellerDetails() throws SellerException {
-		// TODO Auto-generated method stub
-		return null;
+
+	    List<Seller> sellers = new ArrayList<>();
+        
+        
+        try (Connection conn = DBUtil.provideConnection()){
+            
+            PreparedStatement ps = conn.prepareStatement("select * from user where type='seller'");
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                int id = rs.getInt("userid");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Type type = Type.valueOf(rs.getString("type"));
+                
+                Seller seller = new Seller(id,username,password,type);
+                
+                sellers.add(seller);
+            }
+            
+        } catch (SQLException e) {
+            
+            throw new SellerException(e.getMessage());
+        }
+        
+        if(sellers.size() == 0)
+        {
+//            System.out.println(sellers.size());
+            throw new SellerException("NO buyers available");
+        }
+        
+        return sellers;
 	}
 
 	@Override
 	public List<AuctionHistory> getAllSellingReport() throws AuctionHistoryException {
-		// TODO Auto-generated method stub
-		return null;
+
+	    List<AuctionHistory> auctionhistory = new ArrayList<>();
+	    
+	    
+	    try (Connection conn = DBUtil.provideConnection()){
+	        
+	        PreparedStatement ps = conn.prepareStatement("select * from auctionhistory");
+	        
+	        ResultSet rs = ps.executeQuery();
+	        
+	        while(rs.next())
+            {
+                int auctionid = rs.getInt("auctionid");
+                int buyerid = rs.getInt("buyerid");
+                int sellerid = rs.getInt("sellerid");
+                float winningbid = rs.getFloat("winningbid");
+                Date auctiondate = rs.getDate("auctiondate");
+                
+                AuctionHistory auction = new AuctionHistory(auctionid, buyerid, sellerid, winningbid, auctiondate);
+                
+                auctionhistory.add(auction);
+            }
+	        
+            
+        } catch (SQLException e) {
+            
+            throw new AuctionHistoryException(e.getMessage());
+        }
+	    
+	    if(auctionhistory.size() == 0 )
+	    {
+	        throw new AuctionHistoryException("No data available");
+	    }
+	    
+	    return auctionhistory;
 	}
 
 }
