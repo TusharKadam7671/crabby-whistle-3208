@@ -1,16 +1,18 @@
 package com.app.bean;
 
+
+
 public class Seller {
 	
 	private int userid;
 	private String username;
 	private  String password;
 
-	public enum Type {
-	       BUYER, SELLER;
-	     };
-	     
-	private Type type;
+//	public enum Type {
+//        BUYER, SELLER;
+//      };
+      
+      private Type type;
 	
 	
 	public Seller()
@@ -29,10 +31,7 @@ public class Seller {
 
 
 
-
-
-
-	public int getUserid() {
+    public int getUserid() {
 		return userid;
 	}
 

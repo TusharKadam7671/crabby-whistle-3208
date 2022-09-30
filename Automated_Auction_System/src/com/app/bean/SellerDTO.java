@@ -1,15 +1,15 @@
 package com.app.bean;
 
-import com.app.bean.Seller.Type;
+
 
 public class SellerDTO {
 	
 	private int userid;
 	private String username;
 
-	public enum Type {
-	       BUYER, SELLER;
-	     };
+//	public enum Type {
+//	       BUYER, SELLER;
+//	     };
 	     
 	private Type type;
 	

@@ -6,9 +6,9 @@ public class Buyer {
 	private String username;
 	private  String password;
 
-	public enum Type {
-	       BUYER, SELLER;
-	     };
+//	public enum Type {
+//	       BUYER, SELLER;
+//	     };
 	     
 	private Type type;
 	
