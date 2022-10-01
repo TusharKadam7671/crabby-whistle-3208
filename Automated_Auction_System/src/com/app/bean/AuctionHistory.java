@@ -3,74 +3,70 @@ package com.app.bean;
 import java.sql.Date;
 
 public class AuctionHistory {
-	
-	private int auctionid;
-	private int buyerid;
-	private int sellerid;
-	private float winningbid;
-	private Date auctiondate;
-	
-	public AuctionHistory()
-	{
-		
-	}
 
-	public AuctionHistory(int auctionid, int buyerid, int sellerid, float winningbid, Date auctiondate) {
-		super();
-		this.auctionid = auctionid;
-		this.buyerid = buyerid;
-		this.sellerid = sellerid;
-		this.winningbid = winningbid;
-		this.auctiondate = auctiondate;
-	}
+    private int auctionid;
+    private int buyerid;
+    private int sellerid;
+    private float winningbid;
+    private Date auctiondate;
 
-	public int getAuctionid() {
-		return auctionid;
-	}
+    public AuctionHistory() {
 
-	public void setAuctionid(int auctionid) {
-		this.auctionid = auctionid;
-	}
+    }
 
-	public int getBuyerid() {
-		return buyerid;
-	}
+    public AuctionHistory(int auctionid, int buyerid, int sellerid, float winningbid, Date auctiondate) {
+        super();
+        this.auctionid = auctionid;
+        this.buyerid = buyerid;
+        this.sellerid = sellerid;
+        this.winningbid = winningbid;
+        this.auctiondate = auctiondate;
+    }
 
-	public void setBuyerid(int buyerid) {
-		this.buyerid = buyerid;
-	}
+    public int getAuctionid() {
+        return auctionid;
+    }
 
-	public int getSellerid() {
-		return sellerid;
-	}
+    public void setAuctionid(int auctionid) {
+        this.auctionid = auctionid;
+    }
 
-	public void setSellerid(int sellerid) {
-		this.sellerid = sellerid;
-	}
+    public int getBuyerid() {
+        return buyerid;
+    }
 
-	public float getWinningbid() {
-		return winningbid;
-	}
+    public void setBuyerid(int buyerid) {
+        this.buyerid = buyerid;
+    }
 
-	public void setWinningbid(float winningbid) {
-		this.winningbid = winningbid;
-	}
+    public int getSellerid() {
+        return sellerid;
+    }
 
-	public Date getAuctiondate() {
-		return auctiondate;
-	}
+    public void setSellerid(int sellerid) {
+        this.sellerid = sellerid;
+    }
 
-	public void setAuctiondate(Date auctiondate) {
-		this.auctiondate = auctiondate;
-	}
+    public float getWinningbid() {
+        return winningbid;
+    }
 
-	@Override
-	public String toString() {
-		return "AuctionHistory [auctionid=" + auctionid + ", buyerid=" + buyerid + ", sellerid=" + sellerid
-				+ ", winningbid=" + winningbid + ", auctiondate=" + auctiondate + "]";
-	}
-	
-	
-	
+    public void setWinningbid(float winningbid) {
+        this.winningbid = winningbid;
+    }
+
+    public Date getAuctiondate() {
+        return auctiondate;
+    }
+
+    public void setAuctiondate(Date auctiondate) {
+        this.auctiondate = auctiondate;
+    }
+
+    @Override
+    public String toString() {
+        return "AuctionHistory [auctionid=" + auctionid + ", buyerid=" + buyerid + ", sellerid=" + sellerid
+                + ", winningbid=" + winningbid + ", auctiondate=" + auctiondate + "]";
+    }
 
 }
