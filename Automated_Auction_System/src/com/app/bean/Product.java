@@ -1,25 +1,26 @@
 package com.app.bean;
 
 public class Product {
-    
+
     private int prodid;
     private String name;
     private String category;
     private float minprice;
     private int quantity;
-    
-    public Product()
-    {
-        
+    private int sellerid;
+
+    public Product() {
+
     }
 
-    public Product(int prodid, String name, String category, float minprice, int quantity) {
+    public Product(int prodid, String name, String category, float minprice, int quantity, int sellerid) {
         super();
         this.prodid = prodid;
         this.name = name;
         this.category = category;
         this.minprice = minprice;
         this.quantity = quantity;
+        this.sellerid = sellerid;
     }
 
     public int getProdid() {
@@ -62,12 +63,18 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public int getSellerid() {
+        return sellerid;
+    }
+
+    public void setSellerid(int sellerid) {
+        this.sellerid = sellerid;
+    }
+
     @Override
     public String toString() {
         return "Product [prodid=" + prodid + ", name=" + name + ", category=" + category + ", minprice=" + minprice
-                + ", quantity=" + quantity + "]";
+                + ", quantity=" + quantity + ", sellerid=" + sellerid + "]";
     }
-    
-    
 
 }
