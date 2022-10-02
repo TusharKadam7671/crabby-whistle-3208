@@ -19,7 +19,7 @@ public class DBUtil {
             e.printStackTrace();
         }
 
-        String url = "jdbc:mysql://localhost:3306/projectdb";
+        String url = "jdbc:mysql://localhost:3306/project_present";
 
         try {
 

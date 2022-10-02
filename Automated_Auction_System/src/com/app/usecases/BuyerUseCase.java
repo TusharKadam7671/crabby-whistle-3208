@@ -23,7 +23,7 @@ public class BuyerUseCase {
             System.out.println("\n Please select an option to continue:");
             System.out.println(
                     "\n1. Get product details by category \n2. Get ongoing auction details \n3. Check Auction history "
-                            + "\n4. Bid for product \n5. Go to main menu \n6. Exit");
+                            + "\n4. Bid for product \n5. Logout \n6. Exit");
 
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();

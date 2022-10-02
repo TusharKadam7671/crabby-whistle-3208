@@ -26,7 +26,7 @@ public class SellerUseCase {
 
             System.out.println("\n Please select an option to continue:");
             System.out.println("\n1. Get all product list \n2. Add product "
-                    + "\n3. update product \n4. Remove product \n5. Get ongoing auction details \n6. Check Auction history \n7. Go to main menu \n8. Exit");
+                    + "\n3. update product \n4. Remove product \n5. Get ongoing auction details \n6. Check Auction history \n7. Logout \n8. Exit");
 
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
