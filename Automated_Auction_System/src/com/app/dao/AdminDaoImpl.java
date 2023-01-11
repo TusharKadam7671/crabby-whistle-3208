@@ -1,6 +1,7 @@
 package com.app.dao;
 
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,17 +13,16 @@ import java.util.List;
 import com.app.bean.Admin;
 import com.app.bean.Auction;
 import com.app.bean.AuctionHistory;
-import com.app.bean.Buyer;
 import com.app.bean.Product;
 import com.app.bean.Type;
-import com.app.bean.Seller;
+import com.app.bean.User;
+import com.app.consoleColors.ConsoleColors;
 import com.app.exception.AdminException;
 import com.app.exception.AuctionException;
 import com.app.exception.AuctionHistoryException;
 import com.app.exception.BuyerException;
 import com.app.exception.ProductException;
 import com.app.exception.SellerException;
-import com.app.exception.UserException;
 import com.app.utility.DBUtil;
 import com.mysql.cj.protocol.Resultset;
 
@@ -60,9 +60,9 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public List<Buyer> getAllBuyerDetails() throws BuyerException {
+    public List<User> getAllBuyerDetails() throws BuyerException {
 
-        List<Buyer> buyers = new ArrayList<>();
+        List<User> buyers = new ArrayList<>();
 
         try (Connection conn = DBUtil.provideConnection()) {
 
@@ -77,7 +77,7 @@ public class AdminDaoImpl implements AdminDao {
 
                 Type type = Type.valueOf(rs.getString("type"));
 
-                Buyer buyer = new Buyer(id, username, password, type);
+                User buyer = new User(id, username, password, type);
 
                 buyers.add(buyer);
             }
@@ -88,7 +88,7 @@ public class AdminDaoImpl implements AdminDao {
         }
 
         if (buyers.size() == 0) {
-            System.out.println(buyers.size());
+            System.out.println(ConsoleColors.RED_BOLD + buyers.size() + ConsoleColors.RESET);
             throw new BuyerException("NO buyers available");
         }
 
@@ -96,9 +96,9 @@ public class AdminDaoImpl implements AdminDao {
     }
 
     @Override
-    public List<Seller> getAllSellerDetails() throws SellerException {
+    public List<User> getAllSellerDetails() throws SellerException {
 
-        List<Seller> sellers = new ArrayList<>();
+        List<User> sellers = new ArrayList<>();
 
         try (Connection conn = DBUtil.provideConnection()) {
 
@@ -112,7 +112,7 @@ public class AdminDaoImpl implements AdminDao {
                 String password = rs.getString("password");
                 Type type = Type.valueOf(rs.getString("type"));
 
-                Seller seller = new Seller(id, username, password, type);
+                User seller = new User(id, username, password, type);
 
                 sellers.add(seller);
             }
@@ -193,7 +193,7 @@ public class AdminDaoImpl implements AdminDao {
 
         } catch (SQLException e) {
 
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
         }
 
         return message;
@@ -260,14 +260,14 @@ public class AdminDaoImpl implements AdminDao {
             }
 
             if (y > 0) {
-                System.out.println("Auction updated successfully");
+                System.out.println(ConsoleColors.GREEN + "Auction updated successfully" + ConsoleColors.RESET);
             } else {
                 throw new AuctionException("Auction table not updated");
             }
 
         } catch (SQLException e) {
 
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
         } catch (AuctionException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

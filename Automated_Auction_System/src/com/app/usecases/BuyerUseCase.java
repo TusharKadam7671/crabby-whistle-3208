@@ -6,7 +6,7 @@ import java.util.Scanner;
 import com.app.bean.Auction;
 import com.app.bean.AuctionHistory;
 import com.app.bean.Product;
-
+import com.app.consoleColors.ConsoleColors;
 import com.app.dao.BuyerDao;
 import com.app.dao.BuyerDaoImpl;
 
@@ -20,55 +20,62 @@ public class BuyerUseCase {
 
             BuyerDao buyerdao = new BuyerDaoImpl();
 
-            System.out.println("\n Please select an option to continue:");
             System.out.println(
-                    "\n1. Get product details by category \n2. Get ongoing auction details \n3. Check Auction history "
-                            + "\n4. Bid for product \n5. Logout \n6. Exit");
+                    ConsoleColors.PURPLE_BOLD + "\n Please select an option to continue:" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.DARK_BLUE +
+                    "\n1. Get all product list \n2. Get product details by category \n3. Get ongoing auction details \n4. Check Auction history "
+                    + "\n5. Bid for product \n6. Logout \n7. Exit" + ConsoleColors.RESET);
 
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
 
             switch (choice) {
+                
                 case 1:
 
                     try {
 
-                        System.out.println("Enter category to see products");
-                        String category = sc.next();
+                        List<Product> productlist = buyerdao.getAllProductList();
 
-                        List<Product> productlist = buyerdao.getProductDetailsByCategory(category);
-
-                        System.out.println("\n--> List of products:");
+                        System.out.println(ConsoleColors.GREEN_BOLD + "List of all products:" + ConsoleColors.RESET);
 
                         productlist.forEach(p -> {
-                            System.out.println("Prodid: " + p.getProdid() + " Name: " + p.getName() + " Category: "
+                            System.out.println(ConsoleColors.GREEN + "Prodid: " + p.getProdid() + " Name: "
+                                    + p.getName() + " Category: "
                                     + p.getCategory() + " MinPrice: " + p.getMinprice()
-                                    + " Quantity: " + p.getQuantity() + " Sellerid: " + p.getSellerid());
+                                    + " Quantity: " + p.getQuantity() + " Sellerid: " + p.getSellerid()
+                                    + ConsoleColors.RESET);
                         });
 
                     } catch (Exception e) {
-                        System.out.println(e.getMessage());
+                        System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
                     }
 
                     break;
-
+                    
                 case 2:
 
                     try {
 
-                        List<Auction> auctionlist = buyerdao.getAuctionDetails();
+                        sc.nextLine();
+                        System.out
+                                .println(ConsoleColors.ORANGE + "Enter category to see products" + ConsoleColors.RESET);
+                        String category = sc.nextLine();
 
-                        System.out.println("\n--> List of all ongoing actions:");
+                        List<Product> productlist = buyerdao.getProductDetailsByCategory(category);
 
-                        auctionlist.forEach(a -> {
-                            System.out.println("Auctionid: " + a.getAuctionid() + " Sellerid: " + a.getSellerid()
-                                    + " Productid: " + a.getProdid() +
-                                    " Startdate: " + a.getStartdate() + " Enddate: " + a.getEnddate() + " Bid value: "
-                                    + a.getPrice() + " Buyerid: " + a.getBuyerid());
+                        System.out.println(ConsoleColors.GREEN_BOLD + "\n--> List of products:" + ConsoleColors.RESET);
+
+                        productlist.forEach(p -> {
+                            System.out.println(ConsoleColors.GREEN + "Prodid: " + p.getProdid() + " Name: "
+                                    + p.getName() + " Category: "
+                                    + p.getCategory() + " MinPrice: " + p.getMinprice()
+                                    + " Quantity: " + p.getQuantity() + " Sellerid: " + p.getSellerid()
+                                    + ConsoleColors.RESET);
                         });
 
                     } catch (Exception e) {
-                        System.out.println(e.getMessage());
+                        System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
                     }
 
                     break;
@@ -77,33 +84,59 @@ public class BuyerUseCase {
 
                     try {
 
-                        List<AuctionHistory> auctionhistory = buyerdao.getAllSellingReport();
+                        List<Auction> auctionlist = buyerdao.getAuctionDetails();
 
-                        System.out.println("\n--> All auction history");
+                        System.out.println(
+                                ConsoleColors.GREEN_BOLD + "\n--> List of all ongoing actions:" + ConsoleColors.RESET);
 
-                        auctionhistory.forEach(b -> {
-                            System.out.println("Auctionid: " + b.getAuctionid() + " Buyerid: " + b.getBuyerid()
-                                    + " Sellerid: " + b.getSellerid() + " WinningBid: " + b.getWinningbid()
-                                    + " AuctionDate: " + b.getAuctiondate());
+                        auctionlist.forEach(a -> {
+                            System.out.println(ConsoleColors.GREEN + "Auctionid: " + a.getAuctionid() + " Sellerid: "
+                                    + a.getSellerid()
+                                    + " Productid: " + a.getProdid() +
+                                    " Startdate: " + a.getStartdate() + " Enddate: " + a.getEnddate() + " Bid value: "
+                                    + a.getPrice() + " Buyerid: " + a.getBuyerid() + ConsoleColors.RESET);
                         });
 
                     } catch (Exception e) {
-                        System.out.println(e.getMessage());
+                        System.out.println(ConsoleColors.RESET);
                     }
+
                     break;
 
                 case 4:
 
                     try {
-                        System.out.println("Enter auction id");
+
+                        List<AuctionHistory> auctionhistory = buyerdao.getAllSellingReport();
+
+                        System.out
+                                .println(ConsoleColors.GREEN_BOLD + "\n--> All auction history" + ConsoleColors.RESET);
+
+                        auctionhistory.forEach(b -> {
+                            System.out.println(ConsoleColors.GREEN + "Auctionid: " + b.getAuctionid() + " Buyerid: "
+                                    + b.getBuyerid()
+                                    + " Sellerid: " + b.getSellerid() + " WinningBid: " + b.getWinningbid()
+                                    + " AuctionDate: " + b.getAuctiondate() + ConsoleColors.RESET);
+                        });
+
+                    } catch (Exception e) {
+                        System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
+                    }
+                    break;
+
+                case 5:
+
+                    try {
+                        System.out.println(ConsoleColors.ORANGE + "Enter auction id" + ConsoleColors.RESET);
                         int auctionid = sc.nextInt();
 
-                        System.out.println("Enter buyer name");
-                        String username = sc.next();
+                        sc.nextLine();
+                        System.out.println(ConsoleColors.ORANGE + "Enter buyer name" + ConsoleColors.RESET);
+                        String username = sc.nextLine();
 
                         int buyerid = GetId.getId(username);
 
-                        System.out.println("Enter bid value");
+                        System.out.println(ConsoleColors.ORANGE + "Enter bid value" + ConsoleColors.RESET);
                         float bidvalue = sc.nextFloat();
 
                         String result2 = buyerdao.bidForProduct(auctionid, buyerid, bidvalue);
@@ -111,23 +144,24 @@ public class BuyerUseCase {
                         System.out.println(result2);
 
                     } catch (Exception e) {
-                        System.out.println(e.getMessage());
+                        System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
                     }
 
                     break;
 
-                case 5:
+                case 6:
                     Main.run();
                     break;
 
-                case 6: {
-                    System.out.println("\nThank You !");
+                case 7: {
+                    System.out.println(ConsoleColors.ROSY_PINK_BACKGROUND + "\n--> Thank You !" + ConsoleColors.RESET);
                     System.exit(0);
                 }
                     break;
 
                 default:
-                    System.out.println("please Enter Valid input.");
+                    System.out
+                            .println(ConsoleColors.RED_BOLD + "\n--> please Enter Valid input." + ConsoleColors.RESET);
 
             }
 

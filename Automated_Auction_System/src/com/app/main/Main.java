@@ -3,8 +3,8 @@ package com.app.main;
 import java.util.Scanner;
 
 import com.app.bean.Admin;
-import com.app.bean.Buyer;
-import com.app.bean.Seller;
+import com.app.bean.User;
+import com.app.consoleColors.ConsoleColors;
 import com.app.dao.AdminDao;
 import com.app.dao.AdminDaoImpl;
 import com.app.dao.BuyerDao;
@@ -25,9 +25,10 @@ public class Main {
 
         try {
 
-            System.out.println("\nPlease select an option to continue:");
-            System.out.println("\n1. Login as Admin \n2. Register as Buyer or Seller"
-                    + " \n3. Login as Seller \n4. Login as Buyer  \n5. Exit");
+            System.out.println(
+                    ConsoleColors.PURPLE_BOLD + "\nPlease select an option to continue:" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.DARK_BLUE + "\n1. Login as Admin \n2. Register as Buyer or Seller"
+                    + " \n3. Login as Seller \n4. Login as Buyer  \n5. Exit" + ConsoleColors.RESET);
 
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
@@ -35,10 +36,11 @@ public class Main {
             switch (choice) {
                 case 1:
 
-                    System.out.println("Enter username:");
-                    String username = sc.next();
-                    System.out.println("Enter password:");
-                    String password = sc.next();
+                    sc.nextLine();
+                    System.out.println(ConsoleColors.ORANGE + "Enter username:" + ConsoleColors.RESET);
+                    String username = sc.nextLine();
+                    System.out.println(ConsoleColors.ORANGE + "Enter password:" + ConsoleColors.RESET);
+                    String password = sc.nextLine();
 
                     AdminDao admindao = new AdminDaoImpl();
 
@@ -46,12 +48,13 @@ public class Main {
 
                         Admin admin = admindao.loginAdmin(username, password);
 
-                        System.out.println("\n--> Welcome Admin: " + admin.getUsername());
+                        System.out.println(ConsoleColors.GREEN + "\n--> Welcome Admin: " + admin.getUsername()
+                                + ConsoleColors.RESET);
 
                         AdminUseCase.selectoption();
 
                     } catch (AdminException e) {
-                        System.out.println(e.getMessage());
+                        System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
                         run();
                     }
 
@@ -63,23 +66,25 @@ public class Main {
 
                 case 3:
 
-                    System.out.println("Enter username:");
-                    String Susername = sc.next();
-                    System.out.println("Enter password:");
-                    String Spassword = sc.next();
+                    sc.nextLine();
+                    System.out.println(ConsoleColors.ORANGE + "Enter username:" + ConsoleColors.RESET);
+                    String Susername = sc.nextLine();
+                    System.out.println(ConsoleColors.ORANGE + "Enter password:" + ConsoleColors.RESET);
+                    String Spassword = sc.nextLine();
 
                     SellerDao sellerdao = new SellerDaoImpl();
 
                     try {
 
-                        Seller seller = sellerdao.loginSeller(Susername, Spassword);
+                        User seller = sellerdao.loginSeller(Susername, Spassword);
 
-                        System.out.println("\n--> Welcome Seller: " + seller.getUsername());
+                        System.out.println(ConsoleColors.GREEN + "\n--> Welcome Seller: " + seller.getUsername()
+                                + ConsoleColors.RESET);
 
                         SellerUseCase.selectoption();
 
                     } catch (SellerException e) {
-                        System.out.println(e.getMessage());
+                        System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
                         run();
                     }
 
@@ -87,54 +92,56 @@ public class Main {
 
                 case 4:
 
-                    System.out.println("Enter username:");
-                    String Busername = sc.next();
-                    System.out.println("Enter password:");
-                    String Bpassword = sc.next();
+                    sc.nextLine();
+                    System.out.println(ConsoleColors.ORANGE + "Enter username:" + ConsoleColors.RESET);
+                    String Busername = sc.nextLine();
+                    System.out.println(ConsoleColors.ORANGE + "Enter password:" + ConsoleColors.RESET);
+                    String Bpassword = sc.nextLine();
 
                     BuyerDao buyerdao = new BuyerDaoImpl();
 
                     try {
 
-                        Buyer buyer = buyerdao.loginBuyer(Busername, Bpassword);
+                        User buyer = buyerdao.loginBuyer(Busername, Bpassword);
 
-                        System.out.println("\n--> Welcome Buyer: " + buyer.getUsername());
+                        System.out.println(ConsoleColors.GREEN + "\n--> Welcome Buyer: " + buyer.getUsername()
+                                + ConsoleColors.RESET);
 
                         BuyerUseCase.selectoption();
 
                     } catch (BuyerException e) {
-                        System.out.println(e.getMessage());
+                        System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
                         run();
                     }
 
                     break;
 
                 case 5: {
-                    System.out.println("\nThank You !");
+                    System.out.println(ConsoleColors.ROSY_PINK_BACKGROUND + "\nThank You !" + ConsoleColors.RESET);
                     System.exit(0);
                 }
 
                     break;
 
                 default:
-                    System.out.println("please Enter Valid input.");
+                    System.out.println(ConsoleColors.RED_BOLD + "please Enter Valid input." + ConsoleColors.RESET);
+                    run();
 
             }
 
         } catch (Exception e) {
 
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
 
         }
 
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
 
-        System.out.println("      ***********-----------***********      ");
+        System.out.println(ConsoleColors.CYAN_BACKGROUND + "      ***********-----------***********      ");
         System.out.println("     Welcome to Automated Auction System     ");
-        System.out.println("      ***********-----------***********      ");
+        System.out.println("      ***********-----------***********      " + ConsoleColors.RESET);
 
         run();
 

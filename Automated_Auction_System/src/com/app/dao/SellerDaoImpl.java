@@ -1,6 +1,7 @@
 package com.app.dao;
 
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +13,9 @@ import com.app.bean.Admin;
 import com.app.bean.Auction;
 import com.app.bean.AuctionHistory;
 import com.app.bean.Product;
-import com.app.bean.Seller;
 import com.app.bean.Type;
+import com.app.bean.User;
+import com.app.consoleColors.ConsoleColors;
 import com.app.exception.AdminException;
 import com.app.exception.AuctionException;
 import com.app.exception.AuctionHistoryException;
@@ -24,9 +26,9 @@ import com.app.utility.DBUtil;
 public class SellerDaoImpl implements SellerDao {
 
     @Override
-    public Seller loginSeller(String username, String password) throws SellerException {
+    public User loginSeller(String username, String password) throws SellerException {
 
-        Seller seller = null;
+        User seller = null;
 
         try (Connection conn = DBUtil.provideConnection()) {
 
@@ -43,7 +45,7 @@ public class SellerDaoImpl implements SellerDao {
                 String name = rs.getString("username");
                 String pass = rs.getString("password");
                 Type type = Type.SELLER;
-                seller = new Seller(id, name, pass, type);
+                seller = new User(id, name, pass, type);
             } else {
                 throw new SellerException("Invalid Username or Password");
             }
@@ -118,7 +120,7 @@ public class SellerDaoImpl implements SellerDao {
 
         } catch (SQLException e) {
 
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND+ e.getMessage() +ConsoleColors.RESET);
         }
 
         return message;
@@ -150,10 +152,10 @@ public class SellerDaoImpl implements SellerDao {
 
         } catch (SQLException e) {
 
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND+ e.getMessage() +ConsoleColors.RESET);
 
         } catch (ProductException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND+ e.getMessage() +ConsoleColors.RESET);
         }
 
         return message;
