@@ -1,13 +1,13 @@
 package com.app.usecases;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.app.bean.Product;
 import com.app.exception.ProductException;
-import com.app.exception.UserException;
 import com.app.utility.DBUtil;
 
 public class GetId {

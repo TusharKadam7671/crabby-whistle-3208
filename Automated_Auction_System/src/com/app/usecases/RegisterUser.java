@@ -1,14 +1,15 @@
 package com.app.usecases;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import com.app.bean.Buyer;
-import com.app.bean.Seller;
 import com.app.bean.Type;
+import com.app.bean.User;
+import com.app.consoleColors.ConsoleColors;
 import com.app.exception.SellerException;
 import com.app.main.Main;
 import com.app.utility.DBUtil;
@@ -19,9 +20,10 @@ public class RegisterUser {
 
         try {
 
-            System.out.println("\nPlease select an option to continue:");
-            System.out.println("\n1. Register as a Seller \n2. Register as a Buyer"
-                    + "\n3. Go to main menu \n4. Exit");
+            System.out.println(
+                    ConsoleColors.PURPLE_BOLD + "\nPlease select an option to continue:" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.DARK_BLUE + "\n1. Register as a Seller \n2. Register as a Buyer"
+                    + "\n3. Go to main menu \n4. Exit" + ConsoleColors.RESET);
 
             Scanner sc = new Scanner(System.in);
             int choice = sc.nextInt();
@@ -31,10 +33,12 @@ public class RegisterUser {
 
                     try (Connection conn = DBUtil.provideConnection()) {
 
-                        System.out.println("Enter username");
-                        String username = sc.next();
-                        System.out.println("Enter password");
-                        String password = sc.next();
+                        sc.nextLine();
+                        System.out.println(ConsoleColors.ORANGE + "Enter username" + ConsoleColors.RESET);
+                        String username = sc.nextLine();
+
+                        System.out.println(ConsoleColors.ORANGE + "Enter password" + ConsoleColors.RESET);
+                        String password = sc.nextLine();
                         String type = "SELLER";
 
                         PreparedStatement ps1 = conn.prepareStatement(
@@ -50,9 +54,10 @@ public class RegisterUser {
                             String name = rs.getString("username");
                             String pass = rs.getString("password");
                             Type type1 = Type.SELLER;
-                            Seller seller = new Seller(id, name, pass, type1);
+                            User seller = new User(id, name, pass, type1);
 
-                            System.out.println("\n--> User present already..");
+                            System.out.println(
+                                    ConsoleColors.GREEN + "\n--> User present already.." + ConsoleColors.RESET);
 
                             SellerUseCase.selectoption();
                         } else {
@@ -67,17 +72,19 @@ public class RegisterUser {
                             int x = ps.executeUpdate();
 
                             if (x > 0) {
-                                System.out.println("\n--> Seller registered successfully");
+                                System.out.println(ConsoleColors.GREEN + "\n--> Seller registered successfully"
+                                        + ConsoleColors.RESET);
                                 Main.run();
                             } else {
-                                System.out.println("\n--> Seller is not registered");
+                                System.out.println(ConsoleColors.RED_BOLD + "\n--> Seller is not registered"
+                                        + ConsoleColors.RESET);
                             }
 
                         }
 
                     } catch (SQLException e) {
-                        // TODO: handle exception
-                        System.out.println(e.getMessage());
+                        
+                        System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
                     }
 
                     break;
@@ -86,10 +93,11 @@ public class RegisterUser {
 
                     try (Connection conn = DBUtil.provideConnection()) {
 
-                        System.out.println("Enter username");
-                        String username = sc.next();
-                        System.out.println("Enter password");
-                        String password = sc.next();
+                        sc.nextLine();
+                        System.out.println(ConsoleColors.ORANGE + "Enter username" + ConsoleColors.RESET);
+                        String username = sc.nextLine();
+                        System.out.println(ConsoleColors.ORANGE + "Enter password" + ConsoleColors.RESET);
+                        String password = sc.nextLine();
                         String type = "BUYER";
 
                         PreparedStatement ps1 = conn.prepareStatement(
@@ -105,9 +113,10 @@ public class RegisterUser {
                             String name = rs.getString("username");
                             String pass = rs.getString("password");
                             Type type1 = Type.BUYER;
-                            Buyer buyer = new Buyer(id, name, pass, type1);
+                            User buyer = new User(id, name, pass, type1);
 
-                            System.out.println("\n--> User present already..");
+                            System.out.println(
+                                    ConsoleColors.GREEN + "\n--> User present already.." + ConsoleColors.RESET);
 
                             BuyerUseCase.selectoption();
                         } else {
@@ -122,18 +131,20 @@ public class RegisterUser {
                             int x = ps.executeUpdate();
 
                             if (x > 0) {
-                                System.out.println("\n--> Buyer registered successfully");
+                                System.out.println(ConsoleColors.GREEN + "\n--> Buyer registered successfully"
+                                        + ConsoleColors.RESET);
 
                                 Main.run();
                             } else {
-                                System.out.println("\n--> Buyer is not registered");
+                                System.out.println(
+                                        ConsoleColors.RED_BOLD + "\n--> Buyer is not registered" + ConsoleColors.RESET);
                             }
 
                         }
 
                     } catch (SQLException e) {
-                        // TODO: handle exception
-                        System.out.println(e.getMessage());
+                        
+                        System.out.println(ConsoleColors.RESET);
                     }
 
                     break;
@@ -143,15 +154,17 @@ public class RegisterUser {
                     break;
 
                 case 4:
+                    System.out.println(ConsoleColors.ROSY_PINK_BACKGROUND + "\nThank You !" + ConsoleColors.RESET);
                     System.exit(0);
                     break;
 
                 default:
-                    System.out.println("Please enter correct input");
+                    System.out
+                            .println(ConsoleColors.RED_BACKGROUND + "Please enter correct input" + ConsoleColors.RESET);
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND + e.getMessage() + ConsoleColors.RESET);
         }
     }
 

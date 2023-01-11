@@ -2,10 +2,11 @@ package com.app.dao;
 
 import java.util.List;
 
+
 import com.app.bean.Auction;
 import com.app.bean.AuctionHistory;
 import com.app.bean.Product;
-import com.app.bean.Seller;
+import com.app.bean.User;
 import com.app.exception.AuctionException;
 import com.app.exception.AuctionHistoryException;
 import com.app.exception.ProductException;
@@ -13,7 +14,7 @@ import com.app.exception.SellerException;
 
 public interface SellerDao {
 
-    public Seller loginSeller(String username, String password) throws SellerException;
+    public User loginSeller(String username, String password) throws SellerException;
 
     public List<Product> getAllProductList() throws ProductException;
 

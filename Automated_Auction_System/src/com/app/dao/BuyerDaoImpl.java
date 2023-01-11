@@ -1,6 +1,7 @@
 package com.app.dao;
 
 import java.sql.Connection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,10 +11,11 @@ import java.util.List;
 
 import com.app.bean.Auction;
 import com.app.bean.AuctionHistory;
-import com.app.bean.Buyer;
 import com.app.bean.Product;
 
 import com.app.bean.Type;
+import com.app.bean.User;
+import com.app.consoleColors.ConsoleColors;
 import com.app.exception.AuctionException;
 import com.app.exception.AuctionHistoryException;
 import com.app.exception.BidException;
@@ -25,9 +27,9 @@ import com.app.utility.DBUtil;
 public class BuyerDaoImpl implements BuyerDao {
 
     @Override
-    public Buyer loginBuyer(String username, String password) throws BuyerException {
+    public User loginBuyer(String username, String password) throws BuyerException {
 
-        Buyer buyer = null;
+        User user = null;
 
         try (Connection conn = DBUtil.provideConnection()) {
 
@@ -44,7 +46,7 @@ public class BuyerDaoImpl implements BuyerDao {
                 String name = rs.getString("username");
                 String pass = rs.getString("password");
                 Type type = Type.BUYER;
-                buyer = new Buyer(id, name, pass, type);
+                user = new User(id, name, pass, type);
             } else {
                 throw new BuyerException("Invalid Username or Password");
             }
@@ -53,7 +55,44 @@ public class BuyerDaoImpl implements BuyerDao {
             throw new BuyerException(e.getMessage());
         }
 
-        return buyer;
+        return user;
+    }
+    
+    @Override
+    public List<Product> getAllProductList() throws ProductException {
+
+        List<Product> productlist = new ArrayList<>();
+
+        try (Connection conn = DBUtil.provideConnection()) {
+
+            PreparedStatement ps = conn.prepareStatement("select * from product");
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                int prodid = rs.getInt("prodid");
+                String name = rs.getString("name");
+                String category = rs.getString("category");
+                float minprice = rs.getFloat("minprice");
+                int quantity = rs.getInt("quantity");
+                int sellerid = rs.getInt("sellerid");
+
+                Product product = new Product(prodid, name, category, minprice, quantity, sellerid);
+
+                productlist.add(product);
+            }
+
+        } catch (SQLException e) {
+
+            throw new ProductException(e.getMessage());
+        }
+
+        if (productlist.size() == 0) {
+            throw new ProductException("Products are not available");
+        }
+
+        return productlist;
     }
 
     @Override
@@ -155,10 +194,10 @@ public class BuyerDaoImpl implements BuyerDao {
 
         } catch (SQLException e) {
 
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND+ e.getMessage() +ConsoleColors.RESET);
 
         } catch (BidException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleColors.RED_BACKGROUND+ e.getMessage() +ConsoleColors.RESET);
         }
 
         return message;
